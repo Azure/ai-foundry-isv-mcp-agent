@@ -1,0 +1,42 @@
+    apiVersion: 2019-12-01
+    location: westus # Change to your desired Azure region
+    name: <Container Group Name>
+    properties:
+      containers:
+      - name: <Container Instance Name>
+        properties:
+          image: <registry>.azurecr.io/mcp-server-snowflake:v1
+          ports:
+          - port: 9000
+          resources:
+            requests:
+              cpu: 2
+              memoryInGB: 4
+          environmentVariables: # Check the Snowflake MCP Server documentation for details on these variables
+            - name: SNOWFLAKE_MCP_ENDPOINT
+              value: "/snowflake-mcp"
+            - name: SNOWFLAKE_ACCOUNT
+              value: "<Enter Account>"
+            - name: SNOWFLAKE_HOST
+              value: "<Enter Host>"
+            - name: SNOWFLAKE_USER
+              value: "<Enter User>"
+            - name: SNOWFLAKE_PASSWORD
+              secureValue: "<Enter Password>"
+            - name: SNOWFLAKE_ROLE
+              value: "<Enter Role>"
+            - name: SNOWFLAKE_WAREHOUSE
+              value: "<Enter Warehouse>"
+      osType: Linux
+      imageRegistryCredentials:
+      - server: <Registry>.azurecr.io 
+        username: <Registry Username>
+        password: <Registry Password>
+      ipAddress:
+        type: Public
+        dnsNameLabel: <Unique DNS Name>
+        ports:
+        - protocol: tcp
+          port: 9000
+      restartPolicy: Always
+    type: Microsoft.ContainerInstance/containerGroups
