@@ -1,0 +1,30 @@
+[project]
+name = "ai-foundry-isv-mcp-agent"
+dynamic = ["version"]
+description = "AI Foundry Agent with ISV Services"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "azure-ai-projects",
+    "azure-ai-agents>=1.2.0b3",
+    "azure-identity",
+    "python-dotenv",
+    "PyYAML",
+    "streamlit>=1.50.0",
+]
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.distutils.egg_info]
+egg_base = ".venv"
+
+[tool.setuptools.packages.find]
+include = ["ai_foundry_agent*", "mcp_client*"]
+exclude = ["logs*", "mcp_server*", "docs*"]
+
+[project.scripts]
+ai-foundry-agent = "ai_foundry_agent.agent:_main"
+ai-foundry-chat-cli = "mcp_client.client:main"
+
+
+
